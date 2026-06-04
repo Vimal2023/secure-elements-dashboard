@@ -1,6 +1,6 @@
 # Secure Elements Dashboard
 
-> A pixel-perfect, fully responsive, dark-mode glassmorphic dashboard built as a frontend UI/UX engineering assignment.
+> A pixel-perfect, desktop-only, dark-mode glassmorphic dashboard — a strict 1:1 component-based replication of a provided design reference, built as an HR frontend engineering assignment.
 
 ![React](https://img.shields.io/badge/React-19-61DAFB?style=flat-square&logo=react&logoColor=white)
 ![Vite](https://img.shields.io/badge/Vite-8-646CFF?style=flat-square&logo=vite&logoColor=white)
@@ -20,7 +20,7 @@
 | Technology | Purpose |
 |---|---|
 | **React 19** | Component architecture, bootstrapped with Vite |
-| **Tailwind CSS 4** | Utility-first styling, arbitrary value grid tracks, responsive breakpoints |
+| **Tailwind CSS 4** | Utility-first styling, arbitrary value grid tracks, and custom colour tokens |
 | **Recharts 3** | Custom bar charts, donut charts, and sparkline line charts |
 | **Lucide React** | Clean, consistent outline iconography throughout the UI |
 
@@ -40,12 +40,8 @@ Recharts' default SVG rendering was overridden throughout:
 - **ExpensesCard** — A two-layer donut: a `1px`-thick background ring rendered as a separate `<Pie>` acts as the track, with the foreground data arc using `cornerRadius`, `paddingAngle`, and mathematically scaled `innerRadius`/`outerRadius` values to preserve ring thickness at any container size.
 - **SalesActivityCard** — A `LinearGradient`-stroked `LineChart` bleeding flush to the card's bottom edge with `margin={{ bottom: 0 }}` and zero card padding at the chart boundary.
 
-### 📱 Fully Responsive Layout
-Tailwind `md:` and `lg:` breakpoints collapse the complex 3-column desktop grid into a **scrollable single-column layout** on mobile without sacrificing content or visual quality:
-- Sidebar transitions from a fixed off-screen drawer (mobile) to an always-visible static column (desktop) via `translate-x` toggling
-- Header search bar shrinks to an icon-only state on small viewports (`w-10 md:w-64`)
-- Product Sales table gets a horizontal scroll container (`overflow-x-auto`, `min-w-[500px]`) so column data is never truncated
-- Chart containers enforce minimum heights (`min-h-[220px]`) to prevent `ResponsiveContainer` collapsing to zero in a single-column flow
+### 🖥️ Desktop-Only Fixed Layout Fidelity
+The layout is **intentionally fixed to a desktop viewport** to achieve a 1:1 match with the provided design specification. The grid dimensions, card proportions, and typographic scale are all calibrated for a standard desktop screen and are not designed to reflow or adapt to smaller viewports. The assignment's core requirement was visual accuracy, not device adaptability.
 
 ---
 
@@ -71,11 +67,11 @@ The app will be available at **http://localhost:5173** by default.
 
 ```
 src/
-├── App.jsx                     # Root layout, responsive grid, sidebar state
+├── App.jsx                     # Root layout — fixed 3-column grid, sidebar, header
 ├── index.css                   # Tailwind v4 import + global resets
 │
 └── components/
-    ├── Sidebar.jsx             # Fixed/sliding nav with active-state indicators
+    ├── Sidebar.jsx             # Slim vertical nav with active-state indicators
     ├── Header.jsx              # Search bar, notifications, user avatar
     │
     ├── SalesActivityCard.jsx   # Blue gradient card + flush LineChart sparkline
@@ -97,7 +93,7 @@ src/
 - **No `col-span` wrappers** — Cards are direct children of the CSS Grid, keeping the DOM flat and auto-placement predictable.
 - **No third-party UI libraries** — Every component is hand-crafted from primitives to maintain full control over styling fidelity.
 - **SVG-based world map** — The `StoreStaticsCard` sources a real SVG from `/public` and applies a CSS `brightness(0) invert(1)` filter to tint it white, avoiding hard-coded path arrays.
-- **Accessible interactions** — All interactive elements carry `aria-label` attributes; the sidebar drawer uses a backdrop overlay that closes on click.
+- **Accessible interactions** — All interactive elements carry `aria-label` attributes and unique `id` selectors for clear DOM targeting.
 
 ---
 
